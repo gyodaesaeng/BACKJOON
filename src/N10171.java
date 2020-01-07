@@ -4,6 +4,6 @@ public class N10171 {
 		System.out.println("\\    /\\");
 		System.out.println(" )  ( ')");
 		System.out.println("(  /  )");
-		System.out.println(" \\(__)|");
+		System.out.print(" \\(__)|");
 	}
 }
