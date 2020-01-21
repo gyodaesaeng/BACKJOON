@@ -15,7 +15,7 @@ public class N1260 {
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 		int startVertex = Integer.parseInt(st.nextToken());
-		N1260.Graph graph = new N1260().new Graph(n);
+		Graph graph = new Graph(n);
 		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(br.readLine());
 			int a = Integer.parseInt(st.nextToken());
@@ -111,7 +111,7 @@ public class N1260 {
 		return route;
 	}
 
-	class Graph {
+	static class Graph {
 		int nVertex;
 		ArrayList<ArrayList<Integer>> nodeList = new ArrayList<ArrayList<Integer>>();
 
@@ -135,6 +135,133 @@ public class N1260 {
 				Collections.sort(nodeList.get(i));
 			}
 		}
+	}
+
+	static class ListQueue {
+
+		private class Node {
+			private Object data;
+			private Node nextNode;
+
+			Node(Object data) {
+				this.data = data;
+				this.nextNode = null;
+			}
+		}
+
+		private Node front;
+		private Node back;
+
+		public ListQueue() {
+			this.front = null;
+			this.back = null;
+		}
+
+		public boolean empty() {
+			return (front == null);
+		}
+
+		public void push(Object item) {
+
+			Node node = new Node(item);
+			node.nextNode = null;
+
+			if (empty()) {
+
+				back = node;
+				front = node;
+
+			} else {
+
+				back.nextNode = node;
+				back = node;
+
+			}
+		}
+
+		public Object peek() {
+			if (empty())
+				throw new ArrayIndexOutOfBoundsException();
+			return front.data;
+		}
+
+		public Object pop() {
+
+			Object item = peek();
+			front = front.nextNode;
+
+			if (front == null) {
+				back = null;
+			}
+
+			return item;
+		}
+
+		public int size() {
+			int n = 0;
+			if (!empty()) {
+				n++;
+				Node nowNode = front;
+				while (nowNode != back) {
+					nowNode = nowNode.nextNode;
+					n++;
+				}
+			}
+			return n;
+		}
+
+		public Object front() {
+			return front.data;
+		}
+
+		public Object back() {
+			return back.data;
+		}
+	}
+
+	static class ListStack {
+		private Node top;
+
+		private class Node {
+
+			private Object data;
+			private Node nextNode;
+
+			Node(Object data) {
+				this.data = data;
+				this.nextNode = null;
+			}
+		}
+
+		public ListStack() {
+			this.top = null;
+		}
+
+		public boolean empty() {
+			return (top == null);
+		}
+
+		public void push(Object item) {
+
+			Node newNode = new Node(item);
+			newNode.nextNode = top;
+			top = newNode;
+
+		}
+
+		public Object peek() {
+			if (empty())
+				throw new ArrayIndexOutOfBoundsException();
+			return top.data;
+		}
+
+		public Object pop() {
+
+			Object item = peek();
+			top = top.nextNode;
+			return item;
+		}
+
 	}
 
 }

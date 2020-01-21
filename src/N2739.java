@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class N2739 {
 	public static void main(String[] args) {

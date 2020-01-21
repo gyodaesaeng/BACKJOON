@@ -14,6 +14,6 @@ public class N2884 {
 				h += 24;
 			}
 		}
-		System.out.println(h + " " + m);
+		System.out.print(h + " " + m);
 	}
 }

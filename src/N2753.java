@@ -3,9 +3,8 @@ import java.util.Scanner;
 public class N2753 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
+		System.out.print(solve(sc.nextInt()));
 		sc.close();
-		System.out.println(solve(n));
 	}
 
 	static int solve(int n) {
@@ -20,5 +19,4 @@ public class N2753 {
 		}
 		return 0;
 	}
-
 }

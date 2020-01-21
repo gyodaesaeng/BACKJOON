@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class N10869 {
 	public static void main(String[] args) {
@@ -10,6 +10,6 @@ public class N10869 {
 		System.out.println(n - m);
 		System.out.println(n * m);
 		System.out.println(n / m);
-		System.out.println(n % m);
+		System.out.print(n % m);
 	}
 }

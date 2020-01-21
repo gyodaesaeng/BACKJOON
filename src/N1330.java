@@ -7,12 +7,12 @@ public class N1330 {
 		int b = sc.nextInt();
 		sc.close();
 		if (a == b) {
-			System.out.println("==");
+			System.out.print("==");
 		} else {
 			if (a > b) {
-				System.out.println(">");
+				System.out.print(">");
 			} else {
-				System.out.println("<");
+				System.out.print("<");
 			}
 		}
 	}

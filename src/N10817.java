@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class N10817 {
 	public static void main(String[] args) {
@@ -10,21 +10,21 @@ public class N10817 {
 		if (a >= b) {
 			if (a >= c) {
 				if (b >= c) {
-					System.out.println(b);
+					System.out.print(b);
 				} else {
-					System.out.println(c);
+					System.out.print(c);
 				}
 			} else {
-				System.out.println(a);
+				System.out.print(a);
 			}
 		} else {
 			if (a >= c) {
-				System.out.println(a);
+				System.out.print(a);
 			} else {
 				if (b >= c) {
-					System.out.println(c);
+					System.out.print(c);
 				} else {
-					System.out.println(b);
+					System.out.print(b);
 				}
 			}
 		}

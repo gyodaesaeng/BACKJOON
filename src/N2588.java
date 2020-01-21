@@ -11,6 +11,6 @@ public class N2588 {
 			System.out.println(n * (temp % 10));
 			temp /= 10;
 		}
-		System.out.println(n * m);
+		System.out.print(n * m);
 	}
 }
