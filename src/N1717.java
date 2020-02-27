@@ -3,78 +3,70 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.StringTokenizer;
 
 public class N1717 {
 	static int n, m;
-	static ArrayList<Integer>[] co;
+	static int[][] in;
+	static int[] set;
+	static ArrayList<Boolean> out;
 
 	public static void main(String[] args) throws IOException {
+		input();
+		solve();
+		output();
+	}
+
+	static void input() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
-		co = new ArrayList[n + 1];
-		for (int i = 1; i < n + 1; i++) {
-			co[i] = new ArrayList<Integer>();
-		}
+		in = new int[m][3];
 		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
-			int c = Integer.parseInt(st.nextToken());
-			if (a == 0) {
-				co[b].add(c);
-				co[c].add(b);
-			} else {
-				if (bfs(b, c)) {
-					bw.write("YES");
+			for (int j = 0; j < 3; j++) {
+				in[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
+	}
+
+	static void solve() {
+		set = new int[n + 1];
+		for (int i = 0; i <= n; i++) {
+			set[i] = i;
+		}
+		out = new ArrayList<Boolean>();
+		for (int i = 0; i < m; i++) {
+			if (in[i][0] == 0) {
+				if (get(in[i][1]) > get(in[i][2])) {
+					set[set[in[i][1]]] = set[in[i][2]];
 				} else {
-					bw.write("NO");
+					set[set[in[i][2]]] = set[in[i][1]];
 				}
-				bw.newLine();
-			}
-		}
-		bw.flush();
-	}
-
-	static boolean bfs(int s, int e) {
-		boolean[] check = new boolean[n + 1];
-		Deque<Integer> queue = new ArrayDeque<Integer>();
-		check[s] = true;
-		queue.push(s);
-		if (s == e) {
-			return true;
-		}
-		while (!queue.isEmpty()) {
-			for (int i : co[queue.peek()]) {
-				if (!check[i]) {
-					if (s == e) {
-						return true;
-					}
-					check[i] = true;
-					queue.push(i);
-				}
-			}
-			queue.poll();
-		}
-		return false;
-	}
-
-	static void output(ArrayList<Boolean> array) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		for (boolean i : array) {
-			if (i) {
-				bw.write("YES");
 			} else {
-				bw.write("NO");
+				out.add(get(in[i][1]) == get(in[i][2]));
 			}
-			bw.newLine();
+		}
+	}
+
+	static void output() throws IOException {
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		for (boolean b : out) {
+			if (b) {
+				bw.write("YES\n");
+			} else {
+				bw.write("NO\n");
+			}
 		}
 		bw.flush();
+	}
+
+	static int get(int index) {
+		if (index == set[index]) {
+			return index;
+		}
+		return set[index] = get(set[index]);
 	}
 }
