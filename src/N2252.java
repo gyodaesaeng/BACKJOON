@@ -3,14 +3,16 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class N11657 {
-	static final int INF = 5000000;
+public class N2252 {
 	static int n, m;
-	static int[] d;
-	static int[][] map;
+	static int[] inDegree;
+	static ArrayList<Integer> out;
+	static ArrayList<Integer>[] in;
 
 	public static void main(String[] args) throws IOException {
 		input();
@@ -23,58 +25,43 @@ public class N11657 {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
-		map = new int[n + 1][n + 1];
-		for (int i = 0; i <= n; i++) {
-			for (int j = 0; j <= n; j++) {
-				map[i][j] = INF;
-			}
+		inDegree = new int[n + 1];
+		in = new ArrayList[n + 1];
+		for (int i = 1; i <= n; i++) {
+			in[i] = new ArrayList<Integer>();
 		}
 		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(br.readLine());
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
-			int c = Integer.parseInt(st.nextToken());
-			map[a][b] = Math.min(map[a][b], c);
+			inDegree[b]++;
+			in[a].add(b);
 		}
 	}
 
 	static void solve() {
-		d = new int[n + 1];
-		Arrays.fill(d, INF);
-		d[1] = 0;
-		boolean update = false;
-		for (int i = 0; i < n; i++) {
-			update = false;
-			for (int j = 1; j <= n; j++) {
-				for (int k = 1; k <= n; k++) {
-					if (map[j][k] < INF && d[j] < INF && map[j][k] + d[j] < d[k]) {
-						d[k] = map[j][k] + d[j];
-						update = true;
-					}
-				}
-			}
-			if (!update) {
-				break;
+		out = new ArrayList<Integer>();
+		Queue<Integer> q = new LinkedList<Integer>();
+		for (int i = 1; i <= n; i++) {
+			if (inDegree[i] == 0) {
+				q.offer(i);
 			}
 		}
-		if (update) {
-			d[0] = -1;
+		while (!q.isEmpty()) {
+			int peek = q.poll();
+			for (int i : in[peek]) {
+				if (--inDegree[i] == 0) {
+					q.offer(i);
+				}
+			}
+			out.add(peek);
 		}
 	}
 
 	static void output() throws IOException {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		if (d[0] == -1) {
-			bw.write("-1");
-			bw.flush();
-			return;
-		}
-		for (int i = 2; i <= n; i++) {
-			if (d[i] == INF) {
-				bw.write("-1\n");
-			} else {
-				bw.write(d[i] + "\n");
-			}
+		for (int i : out) {
+			bw.write(i + " ");
 		}
 		bw.flush();
 	}
